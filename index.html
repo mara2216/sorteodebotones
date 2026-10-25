@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Elige tu destino: Un juego interactivo de azar donde eliges entre dos botones para descubrir si ganas o pierdes.">
+  <title>Elige tu destino | Juego de Azar</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Canvas para animación de confeti en caso de victoria -->
+  <canvas id="confetti-canvas"></canvas>
+
+  <main class="app-container">
+    <div class="card glass-effect">
+      <header class="card-header">
+        <span class="badge">Juego de Azar</span>
+        <h1 class="main-title">Elige tu destino</h1>
+        <p class="subtitle">Pon a prueba tu suerte. Selecciona uno de los dos caminos.</p>
+      </header>
+
+      <!-- Panel de botones de elección -->
+      <section class="choice-section" aria-label="Botones de elección">
+        <div class="buttons-grid">
+          <button id="btn-red" class="destiny-btn btn-red" type="button" aria-label="Elegir botón rojo">
+            <div class="btn-glow"></div>
+            <div class="btn-content">
+              <span class="btn-icon" aria-hidden="true">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 3z"/>
+                </svg>
+              </span>
+              <span class="btn-text">Botón Rojo</span>
+              <span class="btn-hint">Destino Carmesí</span>
+            </div>
+          </button>
+
+          <button id="btn-blue" class="destiny-btn btn-blue" type="button" aria-label="Elegir botón azul">
+            <div class="btn-glow"></div>
+            <div class="btn-content">
+              <span class="btn-icon" aria-hidden="true">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+                </svg>
+              </span>
+              <span class="btn-text">Botón Azul</span>
+              <span class="btn-hint">Destino Zafiro</span>
+            </div>
+          </button>
+        </div>
+      </section>
+
+      <!-- Área de resultado -->
+      <section id="result-area" class="result-area hidden" aria-live="polite">
+        <div id="result-card" class="result-card">
+          <div id="result-icon-container" class="result-icon-container">
+            <!-- Icono dinámico inyectado por JS -->
+          </div>
+          <h2 id="result-message" class="result-title"></h2>
+          <p id="result-description" class="result-description"></p>
+        </div>
+
+        <button id="btn-reset" class="reset-btn" type="button">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/>
+            <path d="M3 3v5h5"/>
+          </svg>
+          <span>Volver a jugar</span>
+        </button>
+      </section>
+
+      <!-- Marcador de estadísticas -->
+      <footer class="stats-footer">
+        <div class="stat-pill">
+          <span class="stat-label">Victorias</span>
+          <span id="stat-wins" class="stat-value win-color">0</span>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat-pill">
+          <span class="stat-label">Derrotas</span>
+          <span id="stat-losses" class="stat-value loss-color">0</span>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat-pill">
+          <span class="stat-label">Total</span>
+          <span id="stat-total" class="stat-value">0</span>
+        </div>
+      </footer>
+    </div>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>

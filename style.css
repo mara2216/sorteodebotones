@@ -1,0 +1,503 @@
+/* ==========================================================================
+   Variables de Diseño y Paleta de Colores
+   ========================================================================== */
+:root {
+  --font-heading: 'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-body: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+
+  /* Fondo y Superficies */
+  --bg-primary: #0a0d14;
+  --card-bg: rgba(17, 24, 39, 0.7);
+  --card-border: rgba(255, 255, 255, 0.08);
+  --card-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5), 0 0 40px rgba(0, 0, 0, 0.3);
+
+  /* Texto */
+  --text-main: #f9fafb;
+  --text-muted: #9ca3af;
+  --text-dim: #6b7280;
+
+  /* Botón Rojo (Destino Carmesí) */
+  --red-gradient: linear-gradient(135deg, #ef4444 0%, #dc2626 50%, #b91c1c 100%);
+  --red-glow: rgba(239, 68, 68, 0.45);
+  --red-border: rgba(248, 113, 113, 0.3);
+
+  /* Botón Azul (Destino Zafiro) */
+  --blue-gradient: linear-gradient(135deg, #3b82f6 0%, #2563eb 50%, #1d4ed8 100%);
+  --blue-glow: rgba(59, 130, 246, 0.45);
+  --blue-border: rgba(96, 165, 250, 0.3);
+
+  /* Estados de Resultado */
+  --win-color: #10b981;
+  --win-bg: rgba(16, 185, 129, 0.12);
+  --win-border: rgba(16, 185, 129, 0.35);
+  --win-glow: rgba(16, 185, 129, 0.4);
+
+  --loss-color: #f43f5e;
+  --loss-bg: rgba(244, 63, 94, 0.12);
+  --loss-border: rgba(244, 63, 94, 0.35);
+  --loss-glow: rgba(244, 63, 94, 0.4);
+
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 22px;
+  --radius-xl: 32px;
+  --transition-smooth: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* ==========================================================================
+   Reset y Configuración Global
+   ========================================================================== */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-body);
+  background-color: var(--bg-primary);
+  color: var(--text-main);
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  position: relative;
+  overflow-x: hidden;
+  background-image: 
+    radial-gradient(circle at 20% 20%, rgba(239, 68, 68, 0.12) 0%, transparent 40%),
+    radial-gradient(circle at 80% 80%, rgba(59, 130, 246, 0.12) 0%, transparent 40%),
+    radial-gradient(circle at 50% 50%, rgba(15, 23, 42, 0.8) 0%, transparent 100%);
+}
+
+/* Canvas para confeti */
+#confetti-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 100;
+}
+
+/* ==========================================================================
+   Contenedor Principal y Tarjeta Glassmorphic
+   ========================================================================== */
+.app-container {
+  width: 100%;
+  max-width: 580px;
+  z-index: 10;
+  margin: auto;
+}
+
+.card {
+  position: relative;
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius-xl);
+  padding: 2.25rem 2rem 1.5rem;
+  box-shadow: var(--card-shadow);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  text-align: center;
+  transition: var(--transition-smooth);
+}
+
+/* ==========================================================================
+   Encabezado
+   ========================================================================== */
+.card-header {
+  margin-bottom: 1.75rem;
+}
+
+.badge {
+  display: inline-block;
+  padding: 0.3rem 0.85rem;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #a5b4fc;
+  background: rgba(99, 102, 241, 0.14);
+  border: 1px solid rgba(165, 180, 252, 0.25);
+  border-radius: 9999px;
+  margin-bottom: 0.75rem;
+}
+
+.main-title {
+  font-family: var(--font-heading);
+  font-size: 2.4rem;
+  font-weight: 800;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  background: linear-gradient(180deg, #ffffff 0%, #cbd5e1 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 0.5rem;
+}
+
+.subtitle {
+  font-size: 1rem;
+  color: var(--text-muted);
+  font-weight: 400;
+  max-width: 420px;
+  margin: 0 auto;
+  line-height: 1.45;
+}
+
+/* ==========================================================================
+   Botones de Elección (Rojo y Azul)
+   ========================================================================== */
+.choice-section {
+  margin-bottom: 1.25rem;
+}
+
+.buttons-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.25rem;
+}
+
+.destiny-btn {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 1.4rem 1rem;
+  border-radius: var(--radius-lg);
+  cursor: pointer;
+  border: none;
+  background: transparent;
+  outline: none;
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s ease;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.btn-content {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
+  color: #ffffff;
+}
+
+.btn-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 0.25rem;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.btn-text {
+  font-family: var(--font-heading);
+  font-size: 1.35rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.btn-hint {
+  font-size: 0.78rem;
+  opacity: 0.85;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+}
+
+/* Glow animado de fondo del botón */
+.btn-glow {
+  position: absolute;
+  inset: 0;
+  border-radius: var(--radius-lg);
+  transition: opacity 0.3s ease, filter 0.3s ease;
+  z-index: 1;
+}
+
+/* Estilo Botón Rojo */
+.btn-red .btn-glow {
+  background: var(--red-gradient);
+  box-shadow: 0 10px 25px -5px var(--red-glow), inset 0 1px 1px rgba(255, 255, 255, 0.3);
+  border: 1px solid var(--red-border);
+}
+
+.btn-red:hover {
+  transform: translateY(-4px) scale(1.02);
+}
+
+.btn-red:hover .btn-glow {
+  box-shadow: 0 16px 35px -3px var(--red-glow), inset 0 1px 1px rgba(255, 255, 255, 0.4);
+}
+
+.btn-red:hover .btn-icon {
+  transform: scale(1.15) rotate(-6deg);
+}
+
+.btn-red:active {
+  transform: translateY(0) scale(0.98);
+}
+
+/* Estilo Botón Azul */
+.btn-blue .btn-glow {
+  background: var(--blue-gradient);
+  box-shadow: 0 10px 25px -5px var(--blue-glow), inset 0 1px 1px rgba(255, 255, 255, 0.3);
+  border: 1px solid var(--blue-border);
+}
+
+.btn-blue:hover {
+  transform: translateY(-4px) scale(1.02);
+}
+
+.btn-blue:hover .btn-glow {
+  box-shadow: 0 16px 35px -3px var(--blue-glow), inset 0 1px 1px rgba(255, 255, 255, 0.4);
+}
+
+.btn-blue:hover .btn-icon {
+  transform: scale(1.15) rotate(6deg);
+}
+
+.btn-blue:active {
+  transform: translateY(0) scale(0.98);
+}
+
+/* Botones Desactivados */
+.destiny-btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.45;
+  filter: grayscale(0.5);
+  transform: none !important;
+}
+
+/* ==========================================================================
+   Área de Resultado
+   ========================================================================== */
+.result-area {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.25rem;
+  margin-top: 1rem;
+  animation: fadeInSlideUp 0.45s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.result-area.hidden {
+  display: none;
+}
+
+.result-card {
+  width: 100%;
+  padding: 1.5rem;
+  border-radius: var(--radius-lg);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.6rem;
+  border: 1px solid transparent;
+  transition: var(--transition-smooth);
+}
+
+.result-icon-container {
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 0.25rem;
+}
+
+.result-title {
+  font-family: var(--font-heading);
+  font-size: 1.9rem;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+}
+
+.result-description {
+  font-size: 0.95rem;
+  color: var(--text-muted);
+}
+
+/* Resultado Ganador */
+.result-win {
+  background: var(--win-bg);
+  border-color: var(--win-border);
+  box-shadow: 0 10px 30px -5px var(--win-glow);
+}
+
+.result-win .result-icon-container {
+  background: rgba(16, 185, 129, 0.2);
+  color: var(--win-color);
+  border: 1px solid rgba(16, 185, 129, 0.4);
+  animation: winPulse 1.8s infinite;
+}
+
+.result-win .result-title {
+  color: var(--win-color);
+}
+
+/* Resultado Perdedor */
+.result-lose {
+  background: var(--loss-bg);
+  border-color: var(--loss-border);
+  box-shadow: 0 10px 30px -5px var(--loss-glow);
+  animation: shake 0.45s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+}
+
+.result-lose .result-icon-container {
+  background: rgba(244, 63, 94, 0.2);
+  color: var(--loss-color);
+  border: 1px solid rgba(244, 63, 94, 0.4);
+}
+
+.result-lose .result-title {
+  color: var(--loss-color);
+}
+
+/* ==========================================================================
+   Botón Volver a Jugar (Reset)
+   ========================================================================== */
+.reset-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--text-main);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  padding: 0.85rem 1.75rem;
+  border-radius: var(--radius-md);
+  font-family: var(--font-heading);
+  font-size: 1.05rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition-smooth);
+}
+
+.reset-btn:hover {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.3);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+}
+
+.reset-btn:hover svg {
+  transform: rotate(-180deg);
+}
+
+.reset-btn svg {
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.reset-btn:active {
+  transform: translateY(0);
+}
+
+/* ==========================================================================
+   Pie de Estadísticas
+   ========================================================================== */
+.stats-footer {
+  margin-top: 1.5rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--card-border);
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.stat-pill {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.2rem;
+}
+
+.stat-label {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-dim);
+  font-weight: 600;
+}
+
+.stat-value {
+  font-family: var(--font-heading);
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: var(--text-main);
+}
+
+.stat-value.win-color {
+  color: var(--win-color);
+}
+
+.stat-value.loss-color {
+  color: var(--loss-color);
+}
+
+.stat-divider {
+  width: 1px;
+  height: 28px;
+  background-color: var(--card-border);
+}
+
+/* ==========================================================================
+   Animaciones Keyframes
+   ========================================================================== */
+@keyframes fadeInSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(12px) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes winPulse {
+  0%, 100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.4);
+  }
+  50% {
+    transform: scale(1.06);
+    box-shadow: 0 0 0 10px rgba(16, 185, 129, 0);
+  }
+}
+
+@keyframes shake {
+  10%, 90% { transform: translate3d(-1px, 0, 0); }
+  20%, 80% { transform: translate3d(2px, 0, 0); }
+  30%, 50%, 70% { transform: translate3d(-3px, 0, 0); }
+  40%, 60% { transform: translate3d(3px, 0, 0); }
+}
+
+/* ==========================================================================
+   Responsividad Móvil
+   ========================================================================== */
+@media (max-width: 520px) {
+  body {
+    padding: 1rem;
+  }
+
+  .card {
+    padding: 2rem 1.25rem 1.5rem;
+    border-radius: var(--radius-lg);
+  }
+
+  .main-title {
+    font-size: 2rem;
+  }
+
+  .buttons-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .destiny-btn {
+    padding: 1.35rem 1rem;
+  }
+}
