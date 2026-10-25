@@ -109,6 +109,31 @@ class SoundFX {
       });
     } catch (e) {}
   }
+
+  playHorn() {
+    try {
+      this.init();
+      if (!this.ctx) return;
+      // Bocina de coche sintetizada (dos beeps dual-tono)
+      const playBeep = (timeOffset) => {
+        [440, 554].forEach((freq) => {
+          const osc = this.ctx.createOscillator();
+          const gain = this.ctx.createGain();
+          osc.type = 'triangle';
+          osc.frequency.value = freq;
+          const start = this.ctx.currentTime + timeOffset;
+          gain.gain.setValueAtTime(0.12, start);
+          gain.gain.exponentialRampToValueAtTime(0.001, start + 0.12);
+          osc.connect(gain);
+          gain.connect(this.ctx.destination);
+          osc.start(start);
+          osc.stop(start + 0.12);
+        });
+      };
+      playBeep(0);
+      playBeep(0.15);
+    } catch (e) {}
+  }
 }
 
 const sfx = new SoundFX();
@@ -326,3 +351,31 @@ document.addEventListener('keydown', (e) => {
     resetGame();
   }
 });
+
+// ==========================================================================
+// Interacción con el Autito
+// ==========================================================================
+const littleCar = document.getElementById('little-car');
+const hornBubble = document.getElementById('horn-bubble');
+let hornTimeout = null;
+
+if (littleCar) {
+  littleCar.addEventListener('click', () => {
+    sfx.playHorn();
+
+    // Mostrar bocadillo animado
+    if (hornBubble) {
+      hornBubble.classList.add('active');
+      clearTimeout(hornTimeout);
+      hornTimeout = setTimeout(() => {
+        hornBubble.classList.remove('active');
+      }, 1400);
+    }
+
+    // Aceleración turbo temporal
+    littleCar.classList.add('turbo');
+    setTimeout(() => {
+      littleCar.classList.remove('turbo');
+    }, 2800);
+  });
+}

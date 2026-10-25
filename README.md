@@ -12,6 +12,8 @@ Una aplicación web moderna, limpia y minimalista creada con **HTML5, CSS3 y Jav
 - **Estadísticas en vivo**: Contador de victorias, derrotas y total de partidas jugadas.
 - **Efectos de sonido sintetizados**: Audio nativo mediante Web Audio API (sin descargas externas).
 - **Atajos de teclado**: Presiona la tecla `R` para volver a jugar una vez terminada la ronda.
+- **Nuevo fondo nocturno interactivo**: Cielo estrellado con silueta urbana y carretera iluminada.
+- **Autito animado que recorre la app**: Un coche deportivo recorre continuamente la carretera con luces proyectadas, ruedas giratorias y humo de escape. ¡Haz clic en él para tocar la bocina y activar el turbo!
 - **Diseño completamente responsivo**: Adaptado para computadoras de escritorio, tablets y dispositivos móviles.
 
 ## 📁 Estructura del proyecto

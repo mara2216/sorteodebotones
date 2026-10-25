@@ -61,13 +61,14 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 1.5rem;
+  padding: 1.5rem 1.5rem 6.5rem;
   position: relative;
   overflow-x: hidden;
-  background-image: 
-    radial-gradient(circle at 20% 20%, rgba(234, 179, 8, 0.12) 0%, transparent 40%),
-    radial-gradient(circle at 80% 80%, rgba(59, 130, 246, 0.12) 0%, transparent 40%),
-    radial-gradient(circle at 50% 50%, rgba(15, 23, 42, 0.8) 0%, transparent 100%);
+  background: 
+    radial-gradient(circle at 15% 25%, rgba(245, 158, 11, 0.15) 0%, transparent 45%),
+    radial-gradient(circle at 85% 30%, rgba(59, 130, 246, 0.15) 0%, transparent 45%),
+    radial-gradient(circle at 50% 85%, rgba(30, 58, 138, 0.25) 0%, transparent 60%),
+    linear-gradient(180deg, #050811 0%, #0b1120 60%, #0f172a 100%);
 }
 
 /* Canvas para confeti */
@@ -485,7 +486,7 @@ body {
    ========================================================================== */
 @media (max-width: 520px) {
   body {
-    padding: 1rem;
+    padding: 1rem 1rem 5.5rem;
   }
 
   .card {
@@ -505,4 +506,276 @@ body {
   .destiny-btn {
     padding: 1.35rem 1rem;
   }
+
+  .highway {
+    height: 52px;
+  }
+
+  .little-car {
+    transform: scale(0.85) translate3d(-160px, 0, 0);
+    bottom: 2px;
+  }
+}
+
+/* ==========================================================================
+   Escenario del Fondo, Carretera y Autito
+   ========================================================================== */
+.scenery-container {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  overflow: hidden;
+}
+
+/* Estrellas titilantes en el cielo */
+.sky-stars {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 70%;
+  background-image: 
+    radial-gradient(1px 1px at 10% 15%, #ffffff 100%, transparent),
+    radial-gradient(1.5px 1.5px at 25% 35%, rgba(255, 255, 255, 0.8) 100%, transparent),
+    radial-gradient(1px 1px at 45% 12%, rgba(255, 255, 255, 0.9) 100%, transparent),
+    radial-gradient(2px 2px at 60% 28%, rgba(254, 240, 138, 0.8) 100%, transparent),
+    radial-gradient(1px 1px at 75% 18%, rgba(255, 255, 255, 0.7) 100%, transparent),
+    radial-gradient(1.5px 1.5px at 90% 40%, rgba(147, 197, 253, 0.8) 100%, transparent),
+    radial-gradient(1px 1px at 35% 55%, rgba(255, 255, 255, 0.6) 100%, transparent),
+    radial-gradient(1.5px 1.5px at 80% 50%, rgba(255, 255, 255, 0.7) 100%, transparent);
+  background-repeat: repeat;
+  background-size: 380px 240px;
+  opacity: 0.7;
+  animation: starsShimmer 4s ease-in-out infinite alternate;
+}
+
+/* Silueta de ciudad lejana en el horizonte */
+.city-skyline {
+  position: absolute;
+  bottom: 64px;
+  left: 0;
+  width: 100%;
+  height: 44px;
+  background: 
+    repeating-linear-gradient(90deg, 
+      rgba(15, 23, 42, 0.75) 0px, 
+      rgba(15, 23, 42, 0.75) 20px, 
+      transparent 20px, 
+      transparent 24px, 
+      rgba(15, 23, 42, 0.85) 24px, 
+      rgba(15, 23, 42, 0.85) 50px, 
+      transparent 50px, 
+      transparent 55px,
+      rgba(30, 41, 59, 0.7) 55px,
+      rgba(30, 41, 59, 0.7) 90px
+    );
+  mask-image: linear-gradient(to top, black 50%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to top, black 50%, transparent 100%);
+  opacity: 0.55;
+}
+
+/* Carretera / Autopista */
+.highway {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 65px;
+  background: linear-gradient(180deg, #1e293b 0%, #0f172a 35%, #090d16 100%);
+  border-top: 2px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 0 -8px 25px rgba(0, 0, 0, 0.6);
+  z-index: 5;
+}
+
+.road-surface {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+/* Líneas discontinuas de la carretera */
+.road-lines {
+  position: absolute;
+  top: 52%;
+  left: 0;
+  width: 200%;
+  height: 3px;
+  background: repeating-linear-gradient(
+    90deg,
+    #fbbf24 0px,
+    #fbbf24 35px,
+    transparent 35px,
+    transparent 70px
+  );
+  box-shadow: 0 0 6px rgba(251, 191, 36, 0.4);
+  animation: roadScroll 1.4s linear infinite;
+}
+
+/* ==========================================================================
+   El Autito Animado
+   ========================================================================== */
+.little-car {
+  position: absolute;
+  bottom: 6px;
+  left: 0;
+  pointer-events: auto;
+  cursor: pointer;
+  user-select: none;
+  z-index: 15;
+  animation: driveCar 11s linear infinite;
+  will-change: transform;
+  transform: translate3d(-160px, 0, 0);
+}
+
+.car-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.little-car:hover .car-wrapper {
+  transform: translateY(-3px) scale(1.05);
+}
+
+.little-car:active .car-wrapper {
+  transform: translateY(0) scale(0.98);
+}
+
+/* Faros y haz de luz */
+.headlight-beam {
+  position: absolute;
+  top: 23px;
+  left: 122px;
+  width: 170px;
+  height: 38px;
+  background: linear-gradient(90deg, rgba(254, 240, 138, 0.45) 0%, rgba(254, 240, 138, 0.15) 55%, transparent 100%);
+  clip-path: polygon(0 40%, 100% 0%, 100% 100%, 0 70%);
+  filter: blur(3px);
+  pointer-events: none;
+  z-index: -1;
+}
+
+/* Giro de ruedas */
+.wheel-front, .wheel-back {
+  animation: spinWheels 0.35s linear infinite;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+/* Partículas de humo y escape */
+.exhaust-particles {
+  position: absolute;
+  top: 36px;
+  left: -2px;
+  pointer-events: none;
+}
+
+.smoke {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  background: rgba(148, 163, 184, 0.5);
+  border-radius: 50%;
+  opacity: 0;
+}
+
+.smoke.p1 {
+  animation: puffSmoke 0.7s ease-out infinite;
+}
+
+.smoke.p2 {
+  animation: puffSmoke 0.7s ease-out infinite 0.25s;
+}
+
+.smoke.p3 {
+  animation: puffSmoke 0.7s ease-out infinite 0.5s;
+}
+
+/* Bocadillo al tocar la bocina */
+.horn-bubble {
+  position: absolute;
+  top: -38px;
+  left: 20px;
+  background: #fbbf24;
+  color: #0f172a;
+  font-family: var(--font-heading);
+  font-size: 0.78rem;
+  font-weight: 800;
+  padding: 0.35rem 0.75rem;
+  border-radius: 9999px;
+  white-space: nowrap;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+  opacity: 0;
+  transform: translateY(6px) scale(0.85);
+  transition: opacity 0.25s ease, transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  pointer-events: none;
+}
+
+.horn-bubble.active {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+/* Estado Turbo del Coche */
+.little-car.turbo {
+  animation-duration: 4.5s !important;
+}
+
+.little-car.turbo .wheel-front,
+.little-car.turbo .wheel-back {
+  animation-duration: 0.15s !important;
+}
+
+.little-car.turbo .headlight-beam {
+  width: 240px;
+  filter: blur(4px) drop-shadow(0 0 10px #fbbf24);
+}
+
+/* ==========================================================================
+   Keyframes para la carretera y el autito
+   ========================================================================== */
+@keyframes driveCar {
+  0% {
+    transform: translate3d(-170px, 0, 0);
+  }
+  100% {
+    transform: translate3d(calc(100vw + 60px), 0, 0);
+  }
+}
+
+@keyframes roadScroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-70px);
+  }
+}
+
+@keyframes spinWheels {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes puffSmoke {
+  0% {
+    transform: translate(0, 0) scale(0.6);
+    opacity: 0.7;
+  }
+  100% {
+    transform: translate(-24px, -12px) scale(1.8);
+    opacity: 0;
+  }
+}
+
+@keyframes starsShimmer {
+  0% { opacity: 0.45; }
+  100% { opacity: 0.85; }
 }
