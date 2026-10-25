@@ -4,7 +4,7 @@ Una aplicación web moderna, limpia y minimalista creada con **HTML5, CSS3 y Jav
 
 ## 🚀 Características
 - **Título principal**: "Elige tu destino" con diseño centrado y elegante.
-- **Dos botones interactivos**: Botón Rojo y Botón Azul con degradados vibrantes, sombras difuminadas y micro-animaciones al pasar el cursor o hacer clic.
+- **Dos botones interactivos**: Botón Amarillo y Botón Azul con degradados vibrantes, sombras difuminadas y micro-animaciones al pasar el cursor o hacer clic.
 - **Resultado aleatorio**: Al presionar cualquiera de los dos botones, se revela instantáneamente un mensaje aleatorio:
   - 🏆 **"Has ganado"** (con animación de pulso verde y confeti).
   - ❌ **"Has perdido"** (con efecto de vibración sutil).

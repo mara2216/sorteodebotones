@@ -11,7 +11,7 @@ const gameState = {
 };
 
 // Referencias del DOM
-const btnRed = document.getElementById('btn-red');
+const btnYellow = document.getElementById('btn-yellow') || document.getElementById('btn-red');
 const btnBlue = document.getElementById('btn-blue');
 const btnReset = document.getElementById('btn-reset');
 
@@ -202,15 +202,15 @@ const confetti = new ConfettiManager(confettiCanvas);
 // ==========================================================================
 
 /**
- * Procesa la elección del usuario (botón rojo o azul)
- * @param {'red' | 'blue'} chosenButton
+ * Procesa la elección del usuario (botón amarillo o azul)
+ * @param {'yellow' | 'blue'} chosenButton
  */
 function handleChoice(chosenButton) {
   if (!gameState.isPlaying) return;
 
   // Marcar como no disponible hasta reiniciar
   gameState.isPlaying = false;
-  btnRed.disabled = true;
+  btnYellow.disabled = true;
   btnBlue.disabled = true;
 
   // Efecto de sonido de clic
@@ -235,10 +235,10 @@ function handleChoice(chosenButton) {
 /**
  * Presenta el resultado en la interfaz
  * @param {boolean} isWinner 
- * @param {'red' | 'blue'} chosenButton 
+ * @param {'yellow' | 'blue'} chosenButton 
  */
 function displayResult(isWinner, chosenButton) {
-  const buttonName = chosenButton === 'red' ? 'Botón Rojo' : 'Botón Azul';
+  const buttonName = chosenButton === 'yellow' || chosenButton === 'red' ? 'Botón Amarillo' : 'Botón Azul';
 
   // Limpiar clases previas
   resultCard.classList.remove('result-win', 'result-lose');
@@ -295,12 +295,12 @@ function resetGame() {
   resultArea.classList.add('hidden');
 
   // Reactivar botones
-  btnRed.disabled = false;
+  btnYellow.disabled = false;
   btnBlue.disabled = false;
   gameState.isPlaying = true;
 
   // Foco en el primer botón
-  btnRed.focus({ preventScroll: true });
+  btnYellow.focus({ preventScroll: true });
 }
 
 /**
@@ -315,7 +315,7 @@ function updateStatsDisplay() {
 // ==========================================================================
 // Event Listeners
 // ==========================================================================
-btnRed.addEventListener('click', () => handleChoice('red'));
+btnYellow.addEventListener('click', () => handleChoice('yellow'));
 btnBlue.addEventListener('click', () => handleChoice('blue'));
 btnReset.addEventListener('click', resetGame);
 
